@@ -1,4 +1,4 @@
-@echo off
+::@echo off
 
 set server="minecraft"
 
@@ -14,8 +14,16 @@ SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:111 /lparam:1
 ::p
 SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:112 /lparam:1
 :: ENTER
-SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
+::SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
+
+:loop
+FOR /F "tokens=*" %%a in ('WHERE start') do SET OUTPUT=%%a
+%OUTPUT:start=%==x%OUTPUT%
+@ping 127.0.0.1 -n 2 -w 500 > nul
+if not x%OUTPUT:start=%==x%OUTPUT% goto loop
 
 git add --all
 git commit -m 'update'
 git pull https://1484-minecraft:staythefuckathome@github.com/1484-minecraft/1.15.2
+
+PAUSE
