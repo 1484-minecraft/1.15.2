@@ -34,7 +34,7 @@ ME=`whoami`
 				#Checks if the correct user is executing the service, if not, try to switch user
 #Starts the MineCraft Server
 mc_start() {
-  if  pgrep -u $USERNAME -f $SERVICE > /dev/null	#Checks if the server is already running
+  if  pgrep -u $ME -f $SERVICE > /dev/null	#Checks if the server is already running
   then
     echo "$SERVICE is already running!"
   else
@@ -44,7 +44,7 @@ mc_start() {
     cd $MCPATH && tmux new-session -d -s $SCREENNAME $INVOCATION	#Starts the server
 	tmux ls
 	sleep 5
-    if pgrep -u $USERNAME -f $SERVICE > /dev/null	#Checks if the service started or not
+    if pgrep -u $ME -f $SERVICE > /dev/null	#Checks if the service started or not
     then
       echo "$SERVICE is now running."
     else
@@ -54,7 +54,7 @@ mc_start() {
 }
 #Turns off saving of the server
 mc_saveoff() {
-  if pgrep -u $USERNAME -f $SERVICE > /dev/null
+  if pgrep -u $ME -f $SERVICE > /dev/null
   then				#Checks if the server is running, then it alerts the users
     echo "$SERVICE is running... suspending saves"
     tmux send-keys -t $SCREENNAME "say SERVER BACKUP STARTING. Server going readonly" ENTER
@@ -68,7 +68,7 @@ mc_saveoff() {
 }
 #Turns on the saving of the server
 mc_saveon() {
-  if pgrep -u $USERNAME -f $SERVICE > /dev/null
+  if pgrep -u $ME -f $SERVICE > /dev/null
   then				#Checks if the server is running, then it alerts the users
     echo "$SERVICE is running... re-enabling saves"
     tmux send-keys -t $SCREENNAME "save-on" ENTER
@@ -79,19 +79,19 @@ mc_saveon() {
 }
 #Stops the server
 mc_stop() {
-	if pgrep -u $USERNAME -f $SERVICE > /dev/null
+	if pgrep -u $ME -f $SERVICE > /dev/null
 	then				#Alerts the users on the server of incoming server shut down
 		echo "Stopping $SERVICE"
-		# tmux send-keys -t $SCREENNAME "say SERVER SHUTTING DOWN IN 10 SECONDS. Saving map..." ENTER
-		# tmux send-keys -t $SCREENNAME "save-all" ENTER
-		# tmux send-keys -t $SCREENNAME "" ENTER
+		tmux send-keys -t $SCREENNAME "say SERVER SHUTTING DOWN IN 10 SECONDS. Saving map..." ENTER
+		tmux send-keys -t $SCREENNAME "save-all" ENTER
+		tmux send-keys -t $SCREENNAME "" ENTER
 		# sleep 10
 		tmux send-keys -t $SCREENNAME "stop" ENTER
 		sleep 7
 	else
 		echo "$SERVICE was not running."
 	fi
-	if pgrep -u $USERNAME -f $SERVICE > /dev/null	#Checks if the server is still running
+	if pgrep -u $ME -f $SERVICE > /dev/null	#Checks if the server is still running
 	then
 		echo "Error! $SERVICE could not be stopped."
 	else
@@ -115,7 +115,7 @@ case "$1" in
     mc_start
     ;;
   status)
-    if pgrep -u $USERNAME -f $SERVICE > /dev/null
+    if pgrep -u $ME -f $SERVICE > /dev/null
     then
       echo "$SERVICE is running."
     else
