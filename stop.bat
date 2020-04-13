@@ -21,6 +21,8 @@ FOR /F "tokens=*" %%a in ('tasklist /fi "WINDOWTITLE eq minecraft"') do SET OUTP
 @ping 127.0.0.1 -n 2 -w 500 > nul
 if not "%OUTPUT:java=%" == "%OUTPUT%" goto loop
 
+git config user.name 1484-minecraft
+git config user.email angelus2003611@gmail.com
 git add --all
 git commit -m 'update'
 git pull https://1484-minecraft:staythefuckathome@github.com/1484-minecraft/1.15.2
