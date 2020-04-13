@@ -1,0 +1,12 @@
+[20:31:39] [Server thread/INFO]: Starting minecraft server version 1.15.2
+[20:31:39] [Server thread/INFO]: Loading properties
+[20:31:39] [Server thread/INFO]: This server is running CraftBukkit version git-Spigot-ae72bf4-183139d (MC: 1.15.2) (Implementing API version 1.15.2-R0.1-SNAPSHOT)
+[20:31:39] [Server thread/INFO]: Debug logging is disabled
+[20:31:39] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[20:31:39] [Server thread/INFO]: Using 4 threads for Netty based IO
+[20:31:39] [Server thread/INFO]: Default game type: SURVIVAL
+[20:31:39] [Server thread/INFO]: Generating keypair
+[20:31:40] [Server thread/INFO]: Starting Minecraft server on *:25565
+[20:31:40] [Server thread/INFO]: Using epoll channel type
+[20:31:40] [Server thread/INFO]: Preparing level "world"
+[20:31:40] [Server thread/INFO]: Reloading ResourceManager: Default, bukkit

@@ -1,0 +1,132 @@
+#!/bin/bash
+# /etc/init.d/minecraft
+# Author by Nav Vasky
+# Modified by KJie
+
+### BEGIN INIT INFO
+# Provides:   MineCraft
+# Required-Start: $local_fs $remote_fs screen-cleanup
+# Required-Stop:  $local_fs $remote_fs
+# Should-Start:   $network
+# Should-Stop:    $network
+# Default-Start:  2 3 4 5
+# Default-Stop:   0 1 6
+# Short-Description:    MineCraft server
+# Description:    Starts the MineCraft server
+### END INIT INFO
+
+
+#Settings
+SERVICE='spigot.jar'	#The name of the jar file used to boot the server, also the name of the process
+SCREENNAME='minecraft'	#The name screen will use
+OPTIONS='nogui'			#Optional arguments for MineCraft
+USERNAME='tom2003611'			#The user name of the Linux account to be used
+WORLD='world'			#The selected world to load when the server boots
+# MCPATH="/home/$USERNAME/server/$1/"	#The file path for the directory where the server jar is held
+MCPATH="./"	#The file path for the directory where the server jar is held
+MAXHEAP=2048			#The maximum amount of ram allocated to the server
+MINHEAP=1572			#The minimum amount of ram allocated to the server
+# INVOCATION="java -Xms${MINHEAP}M -Xmx${MAXHEAP}M -XX:+UseConcMarkSweepGC -jar $SERVICE $OPTIONS"
+INVOCATION="java -Xms${MINHEAP}M -Xmx${MAXHEAP}M -jar $SERVICE $OPTIONS"
+
+
+ME=`whoami`
+				#Checks if the correct user is executing the service, if not, try to switch user
+#Starts the MineCraft Server
+mc_start() {
+  if  pgrep -u $USERNAME -f $SERVICE > /dev/null	#Checks if the server is already running
+  then
+    echo "$SERVICE is already running!"
+  else
+	git pull https://1484-minecraft:staythefuckathome@github.com/1484-minecraft/1.15.2
+	echo "Starting $SERVICE..."
+    cd $MCPATH
+    cd $MCPATH && tmux new-session -d -s $SCREENNAME $INVOCATION	#Starts the server
+	tmux ls
+	sleep 5
+    if pgrep -u $USERNAME -f $SERVICE > /dev/null	#Checks if the service started or not
+    then
+      echo "$SERVICE is now running."
+    else
+      echo "Error! Could not start $SERVICE!"
+    fi
+  fi
+}
+#Turns off saving of the server
+mc_saveoff() {
+  if pgrep -u $USERNAME -f $SERVICE > /dev/null
+  then				#Checks if the server is running, then it alerts the users
+    echo "$SERVICE is running... suspending saves"
+    tmux send-keys -t $SCREENNAME "say SERVER BACKUP STARTING. Server going readonly" ENTER
+    tmux send-keys -t $SCREENNAME "save-off" ENTER
+    tmux send-keys -t $SCREENNAME "save-all" ENTER
+    sync
+    sleep 10
+  else
+    echo "$SERVICE is not running. Not suspending saves."
+  fi
+}
+#Turns on the saving of the server
+mc_saveon() {
+  if pgrep -u $USERNAME -f $SERVICE > /dev/null
+  then				#Checks if the server is running, then it alerts the users
+    echo "$SERVICE is running... re-enabling saves"
+    tmux send-keys -t $SCREENNAME "save-on" ENTER
+    tmux send-keys -t $SCREENNAME "say SERVER BACKUP ENDED. Server going read-write..." ENTER
+  else
+    echo "$SERVICE is not running. Not resuming saves."
+  fi
+}
+#Stops the server
+mc_stop() {
+  if pgrep -u $USERNAME -f $SERVICE > /dev/null
+  then				#Alerts the users on the server of incoming server shut down
+    git add --all
+	git commit -m 'update'
+	git push https://1484-minecraft:staythefuckathome@github.com/1484-minecraft/1.15.2
+	echo "Stopping $SERVICE"
+    # tmux send-keys -t $SCREENNAME "say SERVER SHUTTING DOWN IN 10 SECONDS. Saving map..." ENTER
+    # tmux send-keys -t $SCREENNAME "save-all" ENTER
+    # tmux send-keys -t $SCREENNAME "" ENTER
+    # sleep 10
+    tmux send-keys -t $SCREENNAME "stop" ENTER
+    sleep 7
+  else
+    echo "$SERVICE was not running."
+  fi
+  if pgrep -u $USERNAME -f $SERVICE > /dev/null	#Checks if the server is still running
+  then
+    echo "Error! $SERVICE could not be stopped."
+  else
+    echo "$SERVICE is stopped."
+  fi
+} 
+
+#Start-Stop here
+case "$1" in
+  start)
+    mc_start
+    ;;
+  stop)
+    mc_stop
+    ;;
+  restart)
+    mc_stop
+    mc_start
+    ;;
+  status)
+    if pgrep -u $USERNAME -f $SERVICE > /dev/null
+    then
+      echo "$SERVICE is running."
+    else
+      echo "$SERVICE is not running."
+    fi
+    ;;
+
+  *)
+  echo "Usage: $0 {start|stop|backup|status|restart|command \"server command\"}"
+  exit 1
+  ;;
+esac
+
+exit 0
