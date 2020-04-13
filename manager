@@ -79,27 +79,27 @@ mc_saveon() {
 }
 #Stops the server
 mc_stop() {
-  if pgrep -u $USERNAME -f $SERVICE > /dev/null
-  then				#Alerts the users on the server of incoming server shut down
-    git add --all
+	if pgrep -u $USERNAME -f $SERVICE > /dev/null
+	then				#Alerts the users on the server of incoming server shut down
+		echo "Stopping $SERVICE"
+		# tmux send-keys -t $SCREENNAME "say SERVER SHUTTING DOWN IN 10 SECONDS. Saving map..." ENTER
+		# tmux send-keys -t $SCREENNAME "save-all" ENTER
+		# tmux send-keys -t $SCREENNAME "" ENTER
+		# sleep 10
+		tmux send-keys -t $SCREENNAME "stop" ENTER
+		sleep 7
+	else
+		echo "$SERVICE was not running."
+	fi
+	if pgrep -u $USERNAME -f $SERVICE > /dev/null	#Checks if the server is still running
+	then
+		echo "Error! $SERVICE could not be stopped."
+	else
+		echo "$SERVICE is stopped."
+	fi
+	git add --all
 	git commit -m 'update'
 	git push https://1484-minecraft:staythefuckathome@github.com/1484-minecraft/1.15.2
-	echo "Stopping $SERVICE"
-    # tmux send-keys -t $SCREENNAME "say SERVER SHUTTING DOWN IN 10 SECONDS. Saving map..." ENTER
-    # tmux send-keys -t $SCREENNAME "save-all" ENTER
-    # tmux send-keys -t $SCREENNAME "" ENTER
-    # sleep 10
-    tmux send-keys -t $SCREENNAME "stop" ENTER
-    sleep 7
-  else
-    echo "$SERVICE was not running."
-  fi
-  if pgrep -u $USERNAME -f $SERVICE > /dev/null	#Checks if the server is still running
-  then
-    echo "Error! $SERVICE could not be stopped."
-  else
-    echo "$SERVICE is stopped."
-  fi
 } 
 
 #Start-Stop here
