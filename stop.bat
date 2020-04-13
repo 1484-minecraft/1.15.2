@@ -18,9 +18,9 @@ SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:112 /lparam:1
 
 :loop
 FOR /F "tokens=*" %%a in ('WHERE start') do SET OUTPUT=%%a
-%OUTPUT:start=%==x%OUTPUT%
+
 @ping 127.0.0.1 -n 2 -w 500 > nul
-if not x%OUTPUT:start=%==x%OUTPUT% goto loop
+if not %OUTPUT:start=%==%OUTPUT% goto loop
 
 git add --all
 git commit -m 'update'
