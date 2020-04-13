@@ -26,6 +26,9 @@ SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:108 /lparam:1
 :: ENTER
 SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
 
+@ping 127.0.0.1 -n 2 -w 5000 > nul
+echo Done
+
 ::Sending shutdown command
 echo Sending shutdown command to server: %server%
 ::s
@@ -52,5 +55,7 @@ git config user.email angelus2003611@gmail.com
 git add --all
 git commit -m 'update'
 git push https://1484-minecraft:staythefuckathome@github.com/1484-minecraft/1.15.2
+
+echo Done
 
 PAUSE
