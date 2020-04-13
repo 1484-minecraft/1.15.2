@@ -12,7 +12,7 @@ SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:116 /lparam:1
 ::o
 SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:111 /lparam:1
 ::p
-SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:113 /lparam:1
+SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:112 /lparam:1
 :: ENTER
 SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
 
