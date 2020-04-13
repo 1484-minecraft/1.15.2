@@ -26,7 +26,7 @@ SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:108 /lparam:1
 :: ENTER
 SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
 
-@ping 127.0.0.1 -n 2 -w 5000 > nul
+@ping 127.0.0.1 -n 6 -w 1000 > nul
 echo Done
 
 ::Sending shutdown command
@@ -45,7 +45,7 @@ SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
 :loop
 For /f "Delims=:" %%A in ('tasklist /fi "WINDOWTITLE eq minecraft"') do SET OUTPUT=%%A
 ::FOR /F "tokens=*" %%a in ('tasklist /fi "WINDOWTITLE eq minecraft"') do SET OUTPUT=%%a
-@ping 127.0.0.1 -n 2 -w 500 > nul
+@ping 127.0.0.1 -n 2 -w 1000 > nul
 if not "%OUTPUT:java=%" == "%OUTPUT%" goto loop
 
 echo Done
