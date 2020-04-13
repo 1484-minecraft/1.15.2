@@ -14,12 +14,10 @@ SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:111 /lparam:1
 ::p
 SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:112 /lparam:1
 :: ENTER
-::SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
+SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
 
 :loop
 FOR /F "tokens=*" %%a in ('tasklist /fi "WINDOWTITLE eq minecraft"') do SET OUTPUT=%%a
-::echo "%OUTPUT:java=%"
-echo "%OUTPUT%"
 @ping 127.0.0.1 -n 2 -w 500 > nul
 if not "%OUTPUT:java=%" == "%OUTPUT%" goto loop
 
