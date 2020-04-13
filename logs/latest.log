@@ -141,3 +141,17 @@
 [15:10:14] [Server thread/INFO]: Time elapsed: 1119 ms
 [15:10:14] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
 [15:10:14] [Server thread/INFO]: Done (29.518s)! For help, type "help"
+[15:11:48] [Server thread/INFO]: Unknown command. Type "/help" for help.[m
+[15:12:00] [Server thread/INFO]: Stopping the server
+[15:12:00] [Server thread/INFO]: Stopping server
+[15:12:00] [Server thread/INFO]: Saving players
+[15:12:00] [Server thread/INFO]: Saving worlds
+[15:12:00] [Server thread/INFO]: Saving chunks for level 'world'/minecraft:overworld
+[15:12:01] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[15:12:01] [Server thread/INFO]: Saving chunks for level 'world_nether'/minecraft:the_nether
+[15:12:02] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[15:12:02] [Server thread/INFO]: Saving chunks for level 'world_the_end'/minecraft:the_end
+[15:12:02] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[15:12:02] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[15:12:02] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[15:12:02] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
