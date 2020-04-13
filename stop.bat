@@ -17,10 +17,11 @@ SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:112 /lparam:1
 ::SendMessage.exe /windowtitle:%server% /message:WM_CHAR /wparam:13 /lparam:1
 
 :loop
-FOR /F "tokens=*" %%a in ('WHERE start') do SET OUTPUT=%%a
-
+FOR /F "tokens=*" %%a in ('tasklist /fi "WINDOWTITLE eq minecraft"') do SET OUTPUT=%%a
+::echo "%OUTPUT:java=%"
+::echo "%OUTPUT%"
 @ping 127.0.0.1 -n 2 -w 500 > nul
-if not %OUTPUT:start=%==%OUTPUT% goto loop
+if not "%OUTPUT:java=%" == "%OUTPUT%" goto loop
 
 git add --all
 git commit -m 'update'
