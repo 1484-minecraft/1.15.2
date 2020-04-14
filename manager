@@ -88,7 +88,7 @@ mc_stop() {
 		tmux send-keys -t $SCREENNAME "stop" ENTER
 		# sleep 7
 		while /usr/bin/pgrep -u $ME -f $SERVICE > /dev/null; do
-			echo 1
+			:
 		done
 		echo "$SERVICE is stopped."
 	else
