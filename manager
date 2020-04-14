@@ -42,8 +42,7 @@ mc_start() {
 	echo "Starting $SERVICE..."
     cd $MCPATH
     cd $MCPATH && tmux new-session -d -s $SCREENNAME $INVOCATION	#Starts the server
-	tmux ls
-	sleep 5
+	sleep 3
     if pgrep -u $ME -f $SERVICE > /dev/null	#Checks if the service started or not
     then
       echo "$SERVICE is now running."
@@ -87,16 +86,20 @@ mc_stop() {
 		tmux send-keys -t $SCREENNAME "" ENTER
 		# sleep 10
 		tmux send-keys -t $SCREENNAME "stop" ENTER
-		sleep 7
+		# sleep 7
+		while ! /usr/bin/pgrep -u $ME -f $SERVICE > /dev/null; do
+			echo 1
+		done
+		echo "$SERVICE is stopped."
 	else
 		echo "$SERVICE was not running."
 	fi
-	if pgrep -u $ME -f $SERVICE > /dev/null	#Checks if the server is still running
-	then
-		echo "Error! $SERVICE could not be stopped."
-	else
-		echo "$SERVICE is stopped."
-	fi
+	# if pgrep -u $ME -f $SERVICE > /dev/null	#Checks if the server is still running
+	# then
+		# echo "Error! $SERVICE could not be stopped."
+	# else
+		# echo "$SERVICE is stopped."
+	# fi
 	git add --all
 	git commit -m 'update'
 	git push https://1484-minecraft:staythefuckathome@github.com/1484-minecraft/1.15.2
